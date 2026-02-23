@@ -1,11 +1,18 @@
 package com.educandoweb.course.entities;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+
+@Entity
+@Table(name = "tb-user")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //aqui tem um auto incremento de id de usuario
     private Long id;
     private String name;
     private String email;
