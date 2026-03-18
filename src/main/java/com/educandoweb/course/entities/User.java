@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 
-@Entity
+@Entity //aqui declaro que minha tabela será de entidades
 @Table(name = "tb-user")
 public class User implements Serializable {
 
