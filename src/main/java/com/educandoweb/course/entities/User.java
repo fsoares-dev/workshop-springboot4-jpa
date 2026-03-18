@@ -3,6 +3,8 @@ package com.educandoweb.course.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -18,6 +20,9 @@ public class User implements Serializable {
     private String email;
     private String phone;
     private String password;
+
+    @OneToMany(mappedBy = "client") //aqui é a mesma coisa, especificação com o banco de dados, alem disso eu mapeio quem é a minha ligação
+    private List<Order> orders = new ArrayList<>();
 
     public User() {}
 
@@ -67,6 +72,11 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    //quando for uma collection, criamos apenas o get
+    public List<Order> getOrders() {
+        return orders;
     }
 
     @Override
