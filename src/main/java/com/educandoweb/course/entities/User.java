@@ -1,5 +1,6 @@
 package com.educandoweb.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -21,6 +22,7 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
+    @JsonIgnore //adicionamos este cara, pois nosso sistema ta sendo uma via de mao dupla entre pedido e usuarios, e isso acabou gerando um loop
     @OneToMany(mappedBy = "client") //aqui é a mesma coisa, especificação com o banco de dados, alem disso eu mapeio quem é a minha ligação
     private List<Order> orders = new ArrayList<>();
 
