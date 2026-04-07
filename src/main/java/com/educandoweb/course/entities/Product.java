@@ -20,7 +20,13 @@ public class Product implements Serializable {
     private Double price;
     private String imgUrl;
 
-    @Transient //para o Jpa nao interpretar algo, utilizo essa anotation, pois aqui ele nao esta reconhecendo meu set
+    //@Transient //para o Jpa nao interpretar algo, utilizo essa anotation, pois aqui ele nao esta reconhecendo meu set -> isso serve para quando ele nao reconhece algo
+    //aqui estamos fazendo a mesma coisa que em sql, passando os dados de uma tabela para outra atraves de pk e fk
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")) //aqui eu passo o nome da tabela e das Fk's que ela possui
+
     private Set<Category> categories = new HashSet<Category>(); //aqui eu utilizo o set, pois estou garantindo que meu produto nao possa ter duas ocorrencias na mesma categoria, no caso, ele nao pode ter a mesma categoria 2 vezes
 
     public Product() {}

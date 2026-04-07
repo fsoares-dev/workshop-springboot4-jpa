@@ -1,5 +1,6 @@
 package com.educandoweb.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,7 +18,8 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
-    @Transient
+    @JsonIgnore //aqui estamos fazendo isso, pois sem ele acaba gerando um loop infinito
+    @ManyToMany(mappedBy = "categories")//aqui eu passo o nome da coleção que eu tenho na minha categoria de produtos, assim eu mapeio pela coleção
     private Set<Product> products = new HashSet<Product>();
 
     public Category() {

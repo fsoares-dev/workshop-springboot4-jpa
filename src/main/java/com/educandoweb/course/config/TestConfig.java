@@ -46,8 +46,18 @@ public class TestConfig implements CommandLineRunner {
         Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 
         categoryRepository.saveAll(Arrays.asList(category1, category2, category3)); //aqui eu estou salvando no banco de dados
+        productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 
-        productRepository.saveAll(Arrays.asList(p1, p2, p3, p4));
+        //aqui eu associo meu primeiro livro com a segunda categoria, fazendo com que meu p1, seja adicionado na categoria 2
+        p1.getCategories().add(category2);
+        p2.getCategories().add(category1);
+        p2.getCategories().add(category3);
+        p3.getCategories().add(category3);
+        p4.getCategories().add(category3);
+        p5.getCategories().add(category2);
+
+        //aqui eu salvo todas as associações feitas
+        productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 
         User u1 = new User(null, "Maria Brown", "maria@gmail.com", "98888888888", "123456");
         User u2 = new User(null, "Alex Green", "alex@gmail.com", "97777777777", "123456");
