@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb-order") //fazendo isso eu diferencio o nome da tabela com uma função do sql
@@ -25,6 +27,9 @@ public class Order implements Serializable {
     @ManyToOne //aqui eu estou passando as especificações para o banco de dados
     @JoinColumn(name = "client_id")
     private User client;
+
+    @OneToMany(mappedBy = "id.order") //o id tem um pedido, aqui eu digo que um pedido pode ter muitos itens
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     public Order() {
     }
@@ -69,6 +74,10 @@ public class Order implements Serializable {
 
     public void setClient(User client) {
         this.client = client;
+    }
+
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
     @Override

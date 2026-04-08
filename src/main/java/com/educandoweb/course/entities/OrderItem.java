@@ -1,6 +1,7 @@
 package com.educandoweb.course.entities;
 
 import com.educandoweb.course.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -14,8 +15,8 @@ import java.util.Objects;
 public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @EmbeddedId
-    private OrderItemPK id;
+    @EmbeddedId //isso é uma chave composta
+    private OrderItemPK id = new OrderItemPK(); //sempre que criamos uma classe auxiliar que é o nosso id composto, devemos instancia-la
 
     private Integer quantity;
     private Double price;
@@ -31,6 +32,7 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore //ele serve para evitar o loop infinito
     public Order getOrder() {
         return id.getOrder();
     }
