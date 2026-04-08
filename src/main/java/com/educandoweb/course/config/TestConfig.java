@@ -74,6 +74,12 @@ public class TestConfig implements CommandLineRunner {
 
         //Para persistir dados, utilizo o repository da entidade e posso salvar múltiplos objetos utilizando o método saveAll, passando uma lista de instâncias
         orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+
+        //aqui nao tem a necessidade de chamar meu repository, pois relacionei meu pagamento com meu pedido, e depois eu seto um pagamento para o meu pedido, assim fazendo salvando o pedido novamente
+        Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+        o1.setPayment(pay1);
+
+        orderRepository.save(o1);
     }
 
 }
