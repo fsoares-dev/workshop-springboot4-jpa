@@ -1,5 +1,6 @@
 package com.educandoweb.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -11,6 +12,10 @@ import java.util.Set;
 @Table(name = "tb_product")
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    //utilizamos o Set para indicar ao JPA que eu não admito repetição de um item
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,6 +87,16 @@ public class Product implements Serializable {
 
     public Set<Category> getCategories() {
         return categories;
+    }
+
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> set = new HashSet<>();
+        //aqui eu percorro minha coleção de itens de pedido associada ao meu produto, e para cada pedido da coleção eu adiciono meu pedido e retorno meu pedido
+        for (OrderItem item : orderItems){
+            set.add(item.getOrder());
+        }
+        return set;
     }
 
     @Override
