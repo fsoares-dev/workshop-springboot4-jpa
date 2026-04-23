@@ -31,7 +31,7 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "id.order") //o id tem um pedido, aqui eu digo que um pedido pode ter muitos itens
     private Set<OrderItem> orderItems = new HashSet<>();
 
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL) //aqui estamos mapeando as duas entidades para terem o mesmo id, pois a relação é um para um, entao o cascade é obrigatório para fazer isso
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL) //aqui estamos mapeando as duas entidades para terem o mesmo id, pois a relação é um para um, o cascade faz algo basicamente assim 'Se eu salvar um Order, salva o Payment junto'
     private Payment payment;
 
     public Order() {
@@ -89,6 +89,14 @@ public class Order implements Serializable {
 
     public Set<OrderItem> getOrderItems() {
         return orderItems;
+    }
+
+    public Double getTotal() { //somamos o sub total de cada item e adicionamos a variavel soma, assim retornando o valor total da compra
+        double sum = 0;
+        for (OrderItem orderItem : orderItems) {
+            sum += orderItem.getSubTotal();
+        }
+        return sum;
     }
 
     @Override
