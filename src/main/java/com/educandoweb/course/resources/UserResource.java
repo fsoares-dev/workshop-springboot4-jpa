@@ -38,4 +38,10 @@ public class UserResource {
         return ResponseEntity.created(uri).body(user);
     }
 
+    @DeleteMapping(value = "/{id}") //devemos passar o caminho e onde ele irá fazer o delete
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();//usamos o noContent pois como deletamos o usuario, nao precisamos retornar nenhum body, entao retornamos um status 204
+    }
+
 }
