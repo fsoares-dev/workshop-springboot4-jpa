@@ -44,4 +44,10 @@ public class UserResource {
         return ResponseEntity.noContent().build();//usamos o noContent pois como deletamos o usuario, nao precisamos retornar nenhum body, entao retornamos um status 204
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user){
+        user = service.update(id, user); //atualizei o usuario
+        return ResponseEntity.ok().body(user);
+    }
+
 }
